@@ -1,5 +1,5 @@
 def imprimirAhorcado(intentos):
-    if(intentos==5):
+    if intentos == 6:
         print("================")
         print("=")
         print("=")
@@ -9,7 +9,17 @@ def imprimirAhorcado(intentos):
         print("=")
         print("=")
         print("===")
-    if (intentos == 4):
+    if intentos == 5:
+        print("================")
+        print("=              |")
+        print("=")
+        print("=")
+        print("=")
+        print("=")
+        print("=")
+        print("=")
+        print("===")
+    if intentos == 4:
         print("================")
         print("=              |")
         print("=              O")
@@ -19,93 +29,233 @@ def imprimirAhorcado(intentos):
         print("=")
         print("=")
         print("===")
-    if (intentos == 3):
-        print("================")
-        print("=              |")
-        print("=              O")
-        print("=          ---------")
-        print("=")
-        print("=")
-        print("=")
-        print("=")
-        print("===")
-    if (intentos == 2):
-        print("================")
-        print("=              |")
-        print("=              O")
-        print("=          ---------")
-        print("=              |    ")
-        print("=              |    ")
-        print("=              |    ")
-        print("=")
-        print("===")
-    if (intentos == 1):
+    if intentos == 3:
         print("================")
         print("=              |")
         print("=              O")
         print("=          ---------")
-        print("=              |    ")
-        print("=              |    ")
-        print("=           ___|    ")
+        print("=")
+        print("=")
+        print("=")
         print("=")
         print("===")
-    if (intentos == 0):
+    if intentos == 2:
         print("================")
         print("=              |")
         print("=              O")
         print("=          ---------")
         print("=              |    ")
         print("=              |    ")
-        print("=           ___|___ ")
         print("=")
-        print("===         PERDISTE!")
+        print("=")
+        print("===")
+    if intentos == 1:
+        print("================")
+        print("=              |")
+        print("=              O")
+        print("=          ---------")
+        print("=              |    ")
+        print("=              |    ")
+        print("=             /     ")
+        print("=            /      ")
+        print("===                 ")
+    if intentos == 0:
+        print("================")
+        print("=              |")
+        print("=              O")
+        print("=          ---------")
+        print("=              |    ")
+        print("=              |    ")
+        print("=             / \   ")
+        print("=            /   \  ")
+        print("===                 ")
 
-archivoPalabras=open("texto_palabra.txt","r")
 
-listaPalabrasOcultas=archivoPalabras.readlines()
+txtpalabra = open("palabras_sencillas.txt", "r")
+lista_de_palabras = txtpalabra.readlines()
+txtpalabra.close()
 
-#palabraoculta=listaPalabrasOcultas[2]
-archivoPalabras.close()
+wins = 0
+vidas = 3
 
+while wins < 3 and vidas > 0:
 
-for palabraoculta in listaPalabrasOcultas:
+    for palabraoculta in lista_de_palabras:
+        palabraoculta = palabraoculta.strip()
 
+        tam = len(palabraoculta)
+        vectorPalabraOculta = []
+        vectorPalabraGuiones = []
+        intentos = 6
 
-    #palabraoculta=palabraoculta.replace("\n","")
-    palabraoculta = palabraoculta.strip()
+        for pos in range(0, tam, 1):
+            vectorPalabraOculta.append(str(palabraoculta[pos]))
+            vectorPalabraGuiones.append("-")
 
-    tam=len(palabraoculta)
-    vectorPalabraOculta=[]
-    vectorPalabraGuiones=[]
-    intentos=6
-    for pos in range (0,tam,1):
-        vectorPalabraOculta.append(str(palabraoculta[pos]))
-        vectorPalabraGuiones.append("-")
-
-
-    print(vectorPalabraGuiones)
-    while(intentos>0):
-
-        print("Cantidad de intentos: ",intentos)
-        coincidencias=0
-        cantidadguiones=0
-        letra=input("Ingrese una letra: ")
-        letra=letra.upper()
-        for pos in range(0,tam,1):
-            if(letra==vectorPalabraOculta[pos]):
-                vectorPalabraGuiones[pos]=letra
-                coincidencias=coincidencias+1
         print(vectorPalabraGuiones)
 
-        for pos in range(0,tam,1):
-            if(vectorPalabraGuiones[pos]=="-"):
-                cantidadguiones=cantidadguiones+1
-        if(coincidencias==0):
-            intentos=intentos-1
-            imprimirAhorcado(intentos)
+        while intentos > 0:
 
-        if(cantidadguiones==0):
-            print("Ganaste, adivinaste la palabra")
-            intentos=-1
-    if(intentos==0):
-        print("Se terminaron tus intentos!")
+            print("Cantidad de intentos: ", intentos)
+            coincidencias = 0
+            cantidadguiones = 0
+            letra = input("Ingrese una letra: ")
+
+            for pos in range(0, tam, 1):
+                if(letra.upper() == vectorPalabraOculta[pos]) or (letra.lower() == vectorPalabraOculta[pos]):
+                    vectorPalabraGuiones[pos] = letra
+                    coincidencias += 1
+
+            print(vectorPalabraGuiones)
+
+            for pos in range(0, tam, 1):
+                if vectorPalabraGuiones[pos] == "-":
+                    cantidadguiones = cantidadguiones + 1
+
+            if coincidencias == 0:
+                intentos -= 1
+                imprimirAhorcado(intentos)
+            else:
+                intentos = intentos
+                imprimirAhorcado(intentos)
+
+            if cantidadguiones == 0:
+                wins += 1
+                if wins == 1:
+                    print(f"Ganaste {wins} punto, adivinaste la palabra")
+                else:
+                    print(f"Ganaste {wins} puntos, adivinaste la palabra")
+
+                intentos = -1
+
+        if intentos == 0:
+            print("Se terminaron tus intentos! Te ahorcaste!")
+            vidas -= 1
+            print(f"Tienes {vidas} vidas, ten cuidado")
+
+
+
+
+txtpalabra = open("palabras_intermedias.txt", "r")
+lista_de_palabras = txtpalabra.readlines()
+txtpalabra.close()
+
+while wins < 6 and vidas > 0:
+
+    for palabraoculta in lista_de_palabras:
+        palabraoculta = palabraoculta.strip()
+
+        tam = len(palabraoculta)
+        vectorPalabraOculta = []
+        vectorPalabraGuiones = []
+        intentos = 6
+
+        for pos in range(0, tam, 1):
+            vectorPalabraOculta.append(str(palabraoculta[pos]))
+            vectorPalabraGuiones.append("-")
+
+        print(vectorPalabraGuiones)
+
+        while intentos > 0:
+
+            print("Cantidad de intentos: ", intentos)
+            coincidencias = 0
+            cantidadguiones = 0
+            letra = input("Ingrese una letra: ")
+
+            for pos in range(0, tam, 1):
+                if (letra.upper() == vectorPalabraOculta[pos]) or (letra.lower() == vectorPalabraOculta[pos]):
+                    vectorPalabraGuiones[pos] = letra
+                    coincidencias += 1
+
+            print(vectorPalabraGuiones)
+
+            for pos in range(0, tam, 1):
+                if vectorPalabraGuiones[pos] == "-":
+                    cantidadguiones = cantidadguiones + 1
+
+            if coincidencias == 0:
+                intentos -= 1
+                imprimirAhorcado(intentos)
+            else:
+                intentos = intentos
+                imprimirAhorcado(intentos)
+
+            if cantidadguiones == 0:
+                wins += 1
+                if wins == 1:
+                    print(f"Ganaste {wins} punto, adivinaste la palabra")
+                else:
+                    print(f"Ganaste {wins} puntos, adivinaste la palabra")
+
+                intentos = -1
+
+        if intentos == 0:
+            print("Se terminaron tus intentos! Te ahorcaste!")
+            vidas -= 1
+            print(f"Tienes {vidas} vidas, ten cuidado")
+
+    if vidas == 0:
+        intentos = 0
+
+txtpalabra = open("palabras_complejas.txt", "r")
+lista_de_palabras = txtpalabra.readlines()
+txtpalabra.close()
+
+while wins < 9 and vidas > 0:
+
+    for palabraoculta in lista_de_palabras:
+        palabraoculta = palabraoculta.strip()
+
+        tam = len(palabraoculta)
+        vectorPalabraOculta = []
+        vectorPalabraGuiones = []
+        intentos = 6
+
+        for pos in range(0, tam, 1):
+            vectorPalabraOculta.append(str(palabraoculta[pos]))
+            vectorPalabraGuiones.append("-")
+
+        print(vectorPalabraGuiones)
+
+        while intentos > 0:
+
+            print("Cantidad de intentos: ", intentos)
+            coincidencias = 0
+            cantidadguiones = 0
+            letra = input("Ingrese una letra: ")
+
+            for pos in range(0, tam, 1):
+                if (letra.upper() == vectorPalabraOculta[pos]) or (letra.lower() == vectorPalabraOculta[pos]):
+                    vectorPalabraGuiones[pos] = letra
+                    coincidencias += 1
+
+            print(vectorPalabraGuiones)
+
+            for pos in range(0, tam, 1):
+                if vectorPalabraGuiones[pos] == "-":
+                    cantidadguiones = cantidadguiones + 1
+
+            if coincidencias == 0:
+                intentos -= 1
+                imprimirAhorcado(intentos)
+            else:
+                intentos = intentos
+                imprimirAhorcado(intentos)
+
+            if cantidadguiones == 0:
+                wins += 1
+                if wins == 1:
+                    print(f"Ganaste {wins} punto, adivinaste la palabra")
+                else:
+                    print(f"Ganaste {wins} puntos, adivinaste la palabra")
+
+                intentos = -1
+
+        if intentos == 0:
+            print("Se terminaron tus intentos, Te ahorcaste!")
+            vidas -= 1
+            print(f"Tienes {vidas} vidas, con Cuidado!")
+
+    if vidas == 0:
+        intentos = 0
