@@ -1,21 +1,21 @@
-base = int(input("Ingrese la base de su figura: "))
-altura = int(input("Ingrese la altura de su figura: "))
-numero = 1
+bas = int(input("Ingrese la base de su figura: "))
+alt = int(input("Ingrese la altura de su figura: "))
+num = 1
 lM = 0
 lm = 0
-if base > altura:
-    lM = base
-    lm = altura
+if bas > alt:
+    lM = bas
+    lm = alt
 else:
-    lM = altura
-    lm = base
+    lM = alt
+    lm = bas
 no_entran = []
 si_entran = []
-while numero != 0:
+while num != 0:
     radio = int(input("Ingrese un radio: "))
-    numero = radio
-    if numero == 0:
-        numero = 0
+    num = radio
+    if num == 0:
+        num = 0
     diametro = 2 * radio
     if diametro <= lm:
         lm = lm - diametro
@@ -24,5 +24,5 @@ while numero != 0:
     else:
         lm = lm
         no_entran.append(radio)
-print(f"Los circulos que si pueden entrar a la figura son {si_entran}")
-print(f"Los circulos que no pueden entrar a la figura son {no_entran}")
+print(f"{si_entran} Pueden entrar en la figura")
+print(f"{no_entran} No pueden entrar en la fifura")
